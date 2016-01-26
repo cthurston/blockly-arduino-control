@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Blockly-Arduino-Control</title>
+
+	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css"/>
+	<link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css"/>
+
+	<script src="/socket.io/socket.io.js"></script>
+
+	<script src="/blockly/blockly_compressed.js"></script>
+	<script src="/blockly/blocks_compressed.js"></script>
+	<script src="/blockly/javascript_compressed.js"></script>
+	<script src="/blockly/msg/js/en.js"></script>
+
+
+	<!-- This will load custom blocks from the server end point. -->
+	<script src="/blocks"></script>
+	<script src="/comPort_blocks"></script>
+
+
+	<script src="/bower_components/moment/min/moment.min.js"></script>
+	<script src="/components/precise-en.js"></script>
+	<script src="/bower_components/angular/angular.js"></script>
+	<script src="/bower_components/angular-route/angular-route.js"></script>
+	<script src="/bower_components/angular-socket-io/socket.js"></script>
+	<script src="/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+	<script src="/bower_components/ng-lodash/build/ng-lodash.min.js"></script>
+
+</head>
+
+<body ng-app="app">
+
+<div id="blocklyDiv" ng-controller="BlocklyCtrl" ng-init="start()"></div>
+
+<div id="leftBlocklyDiv">
+	<h1>
+		<img src="img/new-panel.png" style="width:80px;" align="middle"/>
+		Protocol Builder
+	</h1>
+
+
+	<div ng-controller="ProtocolRunner">
+		<div>
+			<button class="btn btn-lg btn-primary" ng-click="submitCode()" ng-show="!isRunning">
+				<i class="fa fa-play-circle"></i>
+				Run
+			</button>
+			<button class="btn btn-lg btn-primary" ng-click="stop()" ng-show="isRunning">
+				<i class="fa fa-stop"></i>
+				Stop
+			</button>
+			<button id="pause" class="btn btn-primary" ng-click="pause()" ng-show="isRunning && !isPaused">
+				<i class="fa fa-pause"></i>
+				&nbsp;&nbsp;&nbsp;Pause
+			</button>
+			<button id="resume" class="btn btn-primary" ng-click="resume()" ng-show="isRunning && isPaused">
+				<i class="fa fa-play"></i>
+				Resume
+			</button>
+		</div>
+		<div>
+			<span>Step Delay (ms)</span>
+			<i class="fa fa-clock-o"></i>
+			<input type="text" ng-model="stepDelay"/>
+			<span class="pull-right" ng-show="runTime">
+				Last run took {{runDuration}} ({{runTime}}ms)
+			</span>
+		</div>
+		<div>
+			<button class="btn btn-sm btn-primary" ng-click="submitSingleBlock()">
+				<i class="fa fa-step-forward"></i>
+				Run Selected Blocks
+			</button>
+		</div>
+	</div>
+
+	<hr>
+
+	<div ng-controller="ProtocolSaveAndLoad" ng-init="loadSavedProtocols()">
+		<label>Name:</label>
+		<input class="" type="text" id="protocolName" placeholder="Protocol Name" ng-model="protocolName"/>
+
+		<button class="btn btn-sm btn-primary" ng-click="save()">
+			<i class="fa fa-save"></i>
+		</button>
+
+		<button class="btn btn-sm btn-primary" ng-click="showFiles = !showFiles">
+			<i class="fa fa-eye" ng-show="!showFiles"></i>
+			<i class="fa fa-eye-slash" ng-show="showFiles"></i>
+		</button>
+
+		<ul class="list-group" ng-repeat="file in savedProtocols" ng-show="showFiles">
+			<li class="list-group-item">
+				<button class="btn btn-xs btn-danger" ng-click="remove(file)">
+					<i class="fa fa-trash-o"></i>
+				</button>
+				<button class="btn btn-xs btn-success" ng-click="load(file)">
+					<i class="fa fa-thumbs-o-up"></i>
+				</button>
+				{{file}}
+			</li>
+		</ul>
+	</div>
+
+	<hr>
+
+	<div ng-controller="ProtocolCodeViewer">
+		<button class="btn btn-info" ng-click="toCode('JavaScript')">
+			<i class="fa fa-code"></i>
+			JavaScript
+		</button>
+		<br>
+		<textarea id="importExport" ng-model="code" style="width: 100%;height: 3em" ng-show="code.length"></textarea>
+	</div>
+
+	<hr>
+
+	<arduino-blink></arduino-blink>
+	<seal-bar></seal-bar>
+
+	<hr>
+
+	<div ng-controller="ProtocolLogger">
+		<button class="btn btn-danger" ng-click="clear()"><i class="fa fa-eraser"></i> Clear Log</button>
+		<div ng-repeat="row in log">
+			{{row.time | date:'h:mm:ss:sss'}} - {{row.message}}
+		</div>
+
+
+		<div id="error-message">
+			<div style="padding: 5px;" ng-repeat="err in errorMessages" ng-click="removeError($index)">
+				<div class="alert alert-danger">
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					{{err.message}}
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
+
+<script src="js/protocolBuilder/controllers.js"></script>
+<script src="js/protocolBuilder/mcus.js"></script>
+<script src="/blockDirectives"></script>
+
+
+</body>
+</html>
