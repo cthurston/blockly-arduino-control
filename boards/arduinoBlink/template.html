@@ -1,0 +1,14 @@
+<div class="btn btn-xs btn-default" ng-click="showState = !showState">
+	<i class="fa fa-eye" ng-show="!showState"></i>
+	<i class="fa fa-eye-slash" ng-show="showState"></i>
+	Arduino State
+</div>
+<div class="image-overlay" style="height: 150px;" ng-show="showState">
+
+	<img style="width:200px;" src="/img/arduino_uno.png"/>
+
+	<div class="led" style="left:95px; top:2px;"
+		 ng-show="light === 'on'">
+	</div>
+
+</div>

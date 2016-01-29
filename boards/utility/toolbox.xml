@@ -1,0 +1,4 @@
+<category name="Utility">
+	<block type="wait"></block>
+	<block type="com_ports"></block>
+</category>

@@ -1,78 +1,68 @@
-/**
- * Module dependencies
- */
 var express = require('express');
-var http = require('http');
 var path = require('path');
-
-var app = module.exports = express();
-var server = require('http').createServer(app);
-var io = require('socket.io').listen(server);
-
-/**
- * Configuration
- */
-// all environments
-app.set('port', process.env.PORT || 5441);
-
-app.engine('ejs', require('ejs').renderFile);
-app.set('views', __dirname);
-//app.use(express.logger('dev'));
-
-var serveStatic = require('serve-static');
-app.use(serveStatic(path.join(__dirname, 'public')));
-
+var favicon = require('serve-favicon');
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+var app = express();
+
+// view engine setup
+app.set('view engine', 'ejs');
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// development only
+
+
+
+var blocks = require('./routes/blocks');
+var instructions = require('./routes/instructions');
+var utility = require('./routes/utility');
+
+app.use('/blocks', blocks);
+app.use('/instruction', instructions);
+app.use('/utility', utility);
+
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
+});
+
+
+// error handlers
+
+// development error handler
+// will print stacktrace
 if (app.get('env') === 'development') {
-	var errorHandler = require('errorhandler');
-	app.use(errorHandler());
+	app.use(function(err, req, res, next) {
+		res.status(err.status || 500);
+		res.send({
+			message: err.message,
+			status: err.status,
+			data: err.data,
+			stack: err.stack.split('\n')
+		});
+	});
 }
 
-// production only
-if (app.get('env') === 'production') {
-	// TODO
-}
-
-/**
- * Routes
- */
-var router = express.Router();
-
-
-//router.get('/serialPorts', routes.listSerialPorts);
-//
-//router.get('/blocks', routes.blocks);
-//router.get('/blockDirectives', routes.blockDirectives);
-//router.get('/blockDirectiveTemplate/:name', routes.blockDirectiveName);
-//router.get('/comPort_blocks', routes.comPortBlocks);
-//router.get('/blockToolbox', routes.blockToolbox);
-//router.get('/blockToolbox.xml', routes.blockToolbox);
-//
-//router.get('/protocol', routes.loadProtocolNames);
-//router.get('/protocol/:name', routes.loadProtocol);
-//router.post('/protocol', routes.saveProtocol);
-//router.delete('/protocol/:name', routes.removeProtocol);
-
-router.get('*', function(req, res) {
-	res.status(404).send(new Error('Not Found'));
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+	res.status(err.status || 500);
+	res.send({
+		message: err.message,
+		status: err.status,
+		data: err.data,
+		stack: 'Opps! Our fault.'
+	});
 });
 
 
-/**
- * Attach the blockly code interpreter.
- */
-//var interpreterSocketConnect = require('./modules/interpreter');
-//io.sockets.on('connection', interpreterSocketConnect);
-
-/**
- * Start Server
- */
-server.listen(app.get('port'), function() {
-	console.log('Protocol Builder service is running.\n\nTo start go to http://localhost:' + app.get('port'));
-});
-
-
-
+module.exports = app;

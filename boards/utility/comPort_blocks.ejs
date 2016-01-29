@@ -1,0 +1,22 @@
+Blockly.Blocks['com_ports'] = {
+	init: function() {
+		this.appendDummyInput()
+			.appendField("Port:")
+			.appendField(new Blockly.FieldDropdown([
+			<% for(var i=0; i<ports.length; i += 1) { %>
+			["<%- ports[i].comName %>", "<%- ports[i].comName %>"],
+			<% } %>
+			]), "port");
+		this.setOutput(true, "com_port");
+		this.setColour(60);
+		this.setTooltip('');
+		this.setHelpUrl('');
+	}
+};
+
+
+Blockly.JavaScript['com_ports'] = function(block) {
+	var dropdown_port = block.getFieldValue('port');
+	var code = '"' + dropdown_port + '"';
+	return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};

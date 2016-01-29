@@ -18,16 +18,17 @@
 
 	<!-- This will load custom blocks from the server end point. -->
 	<script src="/blocks"></script>
-	<script src="/comPort_blocks"></script>
+	<script src="/blocks/com_ports"></script>
 
 
-	<script src="/bower_components/moment/min/moment.min.js"></script>
-	<script src="/components/precise-en.js"></script>
 	<script src="/bower_components/angular/angular.js"></script>
 	<script src="/bower_components/angular-route/angular-route.js"></script>
 	<script src="/bower_components/angular-socket-io/socket.js"></script>
 	<script src="/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 	<script src="/bower_components/ng-lodash/build/ng-lodash.min.js"></script>
+
+	<script src="/bower_components/moment/min/moment.min.js"></script>
+	<script src="/components/precise-en.js"></script>
 
 </head>
 
@@ -37,8 +38,7 @@
 
 <div id="leftBlocklyDiv">
 	<h1>
-		<img src="img/new-panel.png" style="width:80px;" align="middle"/>
-		Protocol Builder
+		Blockly-Arduino
 	</h1>
 
 
@@ -143,7 +143,6 @@
 </div>
 
 
-
 <script src="js/app.js"></script>
 <script src="js/services.js"></script>
 <script src="js/filters.js"></script>
@@ -151,7 +150,8 @@
 
 <script src="js/protocolBuilder/controllers.js"></script>
 <script src="js/protocolBuilder/mcus.js"></script>
-<script src="/blockDirectives"></script>
+
+<script src="/blocks/directive"></script>
 
 
 </body>
