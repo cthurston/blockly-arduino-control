@@ -29,8 +29,9 @@ router.get('/directive/template/:name', function(req, res, next) {
 
 router.get('/toolbox.xml', function(req, res, next) {
 	glob('/boards/**/toolbox.xml', {root: path.join(__dirname, '../')}, function(err, files) {
-		async.map(files, fs.readFile, function(err, boardToolboxes) {
-			res.type('.xml').render('/boards/toolbox.ejs', { boardToolboxes: boardToolboxes });
+		async.map(files, readFileUTF8, function(err, boardToolboxes) {
+			console.log('board ', boardToolboxes);
+			res.type('.xml').render('boards/toolbox.ejs', { boardToolboxes: boardToolboxes });
 		});
 	});
 });
@@ -43,3 +44,8 @@ router.get('/com_ports', function(req, res, next){
 
 
 module.exports = router;
+
+
+function readFileUTF8(file, next){
+	fs.readFile(file, 'utf8', next);
+}

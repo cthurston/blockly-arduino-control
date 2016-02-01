@@ -1,0 +1,1 @@
+angular.module('barcon.instructionBuilder', ['btford.socket-io']);

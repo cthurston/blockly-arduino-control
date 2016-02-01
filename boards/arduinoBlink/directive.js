@@ -5,7 +5,7 @@ angular.module('boards')
 		return {
 			restrict: 'E',
 			scope: {},
-			templateUrl: '/block/directive/template/' + name,
+			templateUrl: '/blocks/directive/template/' + name,
 			controller: function($scope){
 
 				socket.on(name + '_state', function(data) {

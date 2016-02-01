@@ -32,7 +32,7 @@
 
 </head>
 
-<body ng-app="app">
+<body ng-app="barcon">
 
 <div id="blocklyDiv" ng-controller="BlocklyCtrl" ng-init="start()"></div>
 
@@ -42,7 +42,7 @@
 	</h1>
 
 
-	<div ng-controller="ProtocolRunner">
+	<div ng-controller="InstructionRunner">
 		<div>
 			<button class="btn btn-lg btn-primary" ng-click="submitCode()" ng-show="!isRunning">
 				<i class="fa fa-play-circle"></i>
@@ -79,7 +79,7 @@
 
 	<hr>
 
-	<div ng-controller="ProtocolSaveAndLoad" ng-init="loadSavedProtocols()">
+	<div ng-controller="InstructionSaveAndLoad" ng-init="loadSavedInstructions()">
 		<label>Name:</label>
 		<input class="" type="text" id="protocolName" placeholder="Protocol Name" ng-model="protocolName"/>
 
@@ -92,7 +92,7 @@
 			<i class="fa fa-eye-slash" ng-show="showFiles"></i>
 		</button>
 
-		<ul class="list-group" ng-repeat="file in savedProtocols" ng-show="showFiles">
+		<ul class="list-group" ng-repeat="file in savedInstructions" ng-show="showFiles">
 			<li class="list-group-item">
 				<button class="btn btn-xs btn-danger" ng-click="remove(file)">
 					<i class="fa fa-trash-o"></i>
@@ -107,7 +107,7 @@
 
 	<hr>
 
-	<div ng-controller="ProtocolCodeViewer">
+	<div ng-controller="InstructionCodeViewer">
 		<button class="btn btn-info" ng-click="toCode('JavaScript')">
 			<i class="fa fa-code"></i>
 			JavaScript
@@ -118,12 +118,13 @@
 
 	<hr>
 
+	<!--TODO have these be dynamically added. -->
 	<arduino-blink></arduino-blink>
 	<seal-bar></seal-bar>
 
 	<hr>
 
-	<div ng-controller="ProtocolLogger">
+	<div ng-controller="RunnerLogger">
 		<button class="btn btn-danger" ng-click="clear()"><i class="fa fa-eraser"></i> Clear Log</button>
 		<div ng-repeat="row in log">
 			{{row.time | date:'h:mm:ss:sss'}} - {{row.message}}
@@ -145,11 +146,14 @@
 
 <script src="js/app.js"></script>
 <script src="js/services.js"></script>
-<script src="js/filters.js"></script>
-<script src="js/directives.js"></script>
 
-<script src="js/protocolBuilder/controllers.js"></script>
-<script src="js/protocolBuilder/mcus.js"></script>
+<script src="js/instructionBuilder/index.js"></script>
+<script src="js/instructionBuilder/boards.js"></script>
+<script src="js/instructionBuilder/BlocklyCtrl.js"></script>
+<script src="js/instructionBuilder/InstructionRunner.js"></script>
+<script src="js/instructionBuilder/InstructionCodeViewer.js"></script>
+<script src="js/instructionBuilder/RunnerLogger.js"></script>
+<script src="js/instructionBuilder/InstructionSaveAndLoad.js"></script>
 
 <script src="/blocks/directive"></script>
 
