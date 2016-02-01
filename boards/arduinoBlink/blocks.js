@@ -47,7 +47,7 @@ Blockly.Blocks['arduinoBlink_blinkDuration'] = {
 	init: function() {
 		this.appendDummyInput()
 			.appendField('Arduino Blink')
-			.appendField(new Blockly.FieldImage("/img/clock-icon.png", 20, 20, ""));
+			.appendField(new Blockly.FieldImage("/images/clock-icon.png", 20, 20, ""));
 		this.appendValueInput('duration')
 			.setCheck('Number')
 			.appendField('duration');
@@ -72,7 +72,7 @@ Blockly.Blocks['arduinoBlink_isBlinking'] = {
 	init: function() {
 		this.appendDummyInput()
 			.appendField("Arduino Blink")
-			.appendField(new Blockly.FieldImage("/img/blue-led-icon.png", 15, 15, ""))
+			.appendField(new Blockly.FieldImage("/images/blue-led-icon.png", 15, 15, ""))
 			.appendField("isBlinking")
 			.appendField(new Blockly.FieldDropdown([["On", "on"], ["Off", "off"]]), "blink");
 		this.setInputsInline(true);
@@ -95,7 +95,7 @@ Blockly.Blocks['arduinoBlink_waitForLed'] = {
 	init: function() {
 		this.appendDummyInput()
 			.appendField("Arduino Blink")
-			.appendField(new Blockly.FieldImage("/img/blue-led-icon.png", 15, 15, ""))
+			.appendField(new Blockly.FieldImage("/images/blue-led-icon.png", 15, 15, ""))
 			.appendField("wait for LED")
 			.appendField(new Blockly.FieldDropdown([["On", "on"], ["Off", "off"]]), "blink");
 		this.setInputsInline(true);
