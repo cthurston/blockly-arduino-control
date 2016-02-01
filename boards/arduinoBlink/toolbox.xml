@@ -1,7 +1,0 @@
-<category name="Arduino Blink">
-	<block type="arduinoBlink_connect"></block>
-	<block type="arduinoBlink_blinkDuration"></block>
-	<block type="arduinoBlink_isBlinking"></block>
-	<block type="arduinoBlink_waitForLed"></block>
-	<block type="arduinoBlink_rawCommand"></block>
-</category>

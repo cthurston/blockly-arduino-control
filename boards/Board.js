@@ -1,27 +1,33 @@
 var _ = require('lodash');
 var serialPort = require('serialport');
 var SerialPort = serialPort.SerialPort;
-var BracketsProtocol = require('../protocols/BracketsProtocol');
+var BracketsProtocol = require('../protocols/brackets/BracketsProtocol');
 
 module.exports = Board;
 
-function Board(options) {
-	options = options || {};
+function Board() {
 
-	this.baudRate = options.baudRate || 115200;
-	this.prefix = options.prefix || 'defaultBoard_';
-	this.initializationTime = options.initializationTime || 2000;
-	this.name = options.name || 'Default Board';
-	this.protocol = options.protocol || new BracketsProtocol();
+	this.baudRate = 115200;
+	this.prefix = 'defaultBoard_';
+	this.initializationTime = 2000;
+	this.name ='Default Board';
+	this.protocol = new BracketsProtocol();
 
 	this.clients = [];
 	this.commandQueue = {};
 	this.connection = null;
 	this.state = {};
 
+	this.connect = connect.bind(this);
+
 }
 
-Board.prototype.connect = function(port, next) {
+Board.prototype.init = function(){
+	throw new Error('Please implement init function for Board ' + this.name);
+};
+
+
+function connect(port, next) {
 	if (this.connection && this.connection.isOpen()) {
 		return next();
 	}
@@ -43,13 +49,14 @@ Board.prototype.connect = function(port, next) {
 	}).bind(this));
 
 	this.connection.on('data', this.protocol.receiveData.bind(this.protocol));
-};
+}
 
 Board.prototype.connected = function() {
 	this.protocol.on('receivedPacket', this.receivedPacket.bind(this));
 };
 
 Board.prototype.receivedPacket = function(args) {
+	console.log('Received Packet ', args);
 	//Error checking packet?  Maybe [1] is always the error code.
 	var cmd = args[0];
 	if (this.commandQueue[cmd]) {

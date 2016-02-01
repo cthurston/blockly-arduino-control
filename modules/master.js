@@ -41,7 +41,7 @@ function Master(socket) {
 
 		//Hook the api of each board.  Needs socket closure
 		_.each(boards, function(board) {
-			board(interpreter, interpreterScope, socket);
+			board.init(interpreter, interpreterScope, socket);
 		});
 	};
 

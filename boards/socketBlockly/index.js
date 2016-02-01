@@ -1,4 +1,8 @@
-var initApi = function(master, scope, socket) {
+module.exports = {
+	init: init
+};
+
+function init(master, scope, socket) {
 
 	var highlightBlock = function(id) {
 		//Must convert arguments explicitly to strings.
@@ -7,6 +11,4 @@ var initApi = function(master, scope, socket) {
 
 	master.addApi(global, 'highlightBlock', highlightBlock);
 
-};
-
-module.exports = initApi;
+}

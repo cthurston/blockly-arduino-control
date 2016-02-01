@@ -19,8 +19,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public', 'blockly')));
 
 
-
-
 var blocks = require('./routes/blocks');
 var instructions = require('./routes/instructions');
 var utility = require('./routes/utility');
@@ -28,6 +26,8 @@ var utility = require('./routes/utility');
 app.use('/blocks', blocks);
 app.use('/instruction', instructions);
 app.use('/', utility);
+
+
 
 
 // catch 404 and forward to error handler

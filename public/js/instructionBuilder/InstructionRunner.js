@@ -28,8 +28,8 @@ angular.module('barcon.instructionBuilder').controller('InstructionRunner', [
 			Blockly.JavaScript.STATEMENT_PREFIX = 'stepDelay(' + $scope.stepDelay + ');\n';
 			Blockly.JavaScript.addReservedWords('stepDelay');
 
-			Blockly.JavaScript.STATEMENT_PREFIX += 'highlightBlock(%1);\n';
-			Blockly.JavaScript.addReservedWords('highlightBlock');
+		//	Blockly.JavaScript.STATEMENT_PREFIX += 'highlightBlock(%1);\n';
+	//		Blockly.JavaScript.addReservedWords('highlightBlock');
 		};
 
 		$scope.submitCode = function() {

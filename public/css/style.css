@@ -1,0 +1,14 @@
+html, body {
+	height: 100%;
+}
+
+#blocklyDiv {
+	float: right;
+	height: 95%;
+	width: 65%;
+}
+
+#leftBlocklyDiv {
+	width: 35%;
+	padding-left: 5px;
+}

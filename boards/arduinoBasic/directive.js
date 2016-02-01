@@ -1,6 +1,6 @@
 angular.module('boards')
-	.directive('arduinoBlink', ['lodash', 'socket', function(_, socket) {
-		var name = 'arduinoBlink';
+	.directive('arduinoBasic', ['lodash', 'socket', function(_, socket) {
+		var name = 'arduinoBasic';
 
 		return {
 			restrict: 'E',

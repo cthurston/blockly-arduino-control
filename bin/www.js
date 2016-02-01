@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('blockly-arduino-control:server');
 var http = require('http');
-var io = require('socket.io');
+var socketIo = require('socket.io');
 
 /**
  * Get port from environment and store in Express.
@@ -21,7 +21,15 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-io.listen(server);
+var io = socketIo.listen(server);
+
+/**
+ * Attach the blockly code interpreter.
+ * Every socket.io connection gets it's own master.
+ */
+var masterSocketFactory = require('../modules/master');
+io.sockets.on('connection', masterSocketFactory);
+
 
 /**
  * Listen on provided port, on all network interfaces.

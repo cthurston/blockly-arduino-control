@@ -1,6 +1,10 @@
 var _ = require('lodash');
 
-var initApi = function(interpreter, scope, socket) {
+module.exports = {
+	init: init
+};
+
+function init(interpreter, scope, socket) {
 
 	var logWrapper = function() {
 		var printList = _.map(arguments, function(a) {
@@ -27,6 +31,4 @@ var initApi = function(interpreter, scope, socket) {
 	interpreter.addApi(global, 'wait', wait);
 	interpreter.addApi(global, 'stepDelay', wait);
 
-};
-
-module.exports = initApi;
+}

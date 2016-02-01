@@ -18,21 +18,22 @@ function BracketsProtocol() {
 	this.receiveData = function(data) {
 		var indexOfClose;
 		var args;
+		var msg = data.toString();
 
-		validateIncomingPacket(currentBuffer, data);
+		validateIncomingPacket(currentBuffer, msg);
 
 		//Look for end
-		indexOfClose = data.indexOf(close);
+		indexOfClose = msg.indexOf(close);
 		if (indexOfClose === -1) {
-			currentBuffer += data;
+			currentBuffer += msg;
 		} else {
-			currentBuffer += data.substring(0, indexOfClose + 1);
+			currentBuffer += msg.substring(0, indexOfClose + 1);
 			args = fromPacket(currentBuffer);
 
 			this.emit('receivedPacket', args);
 
 			currentBuffer = '';
-			this.receiveData(data.substring(indexOfClose + 1));
+			this.receiveData(msg.substring(indexOfClose + 1));
 		}
 	};
 
@@ -52,13 +53,13 @@ function fromPacket(packet) {
 	return packet.split(delimiter);
 }
 
-function validateIncomingPacket(currentBuffer, data) {
-	if (!data.length) {
+function validateIncomingPacket(currentBuffer, msg) {
+	if (!msg.length) {
 		return;
-	} else if (currentBuffer.length === 0 && data[0] !== open) {
-		throw new Error('Received data outside an opening bracket: ' + data);
-	} else if (currentBuffer.length && countOccurrence(data, close) === 0 && countOccurrence(data, open) > 0) {
-		throw new Error('Received opening of packet before close of last: ' + currentBuffer + ' then ' + data);
+	} else if (currentBuffer.length === 0 && msg[0] !== open) {
+		throw new Error('Received data outside an opening bracket: ' + msg);
+	} else if (currentBuffer.length && countOccurrence(msg, close) === 0 && countOccurrence(msg, open) > 0) {
+		throw new Error('Received opening of packet before close of last: ' + currentBuffer + ' then ' + msg);
 	}
 }
 
