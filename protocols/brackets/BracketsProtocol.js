@@ -38,7 +38,15 @@ function BracketsProtocol() {
 	};
 
 	this.toPacket = function() {
-		var args = Array.prototype.slice.call(arguments);
+		var args = [];
+
+		for (var i = 0; i < arguments.length; i += 1) {
+			var arg = arguments[i];
+			if (typeof arg !== 'function') {
+				args.push(arg);
+			}
+		}
+
 		var packet = open + args.join(delimiter) + close;
 		validatePacket(packet, args);
 		return packet;

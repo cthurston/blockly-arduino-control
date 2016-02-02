@@ -2,4 +2,5 @@
 	<block type="arduinoBasic_connect"></block>
 	<block type="arduinoBasic_setPin"></block>
 	<block type="arduinoBasic_rawCommand"></block>
+	<block type="arduinoBasic_echoAfter"></block>
 </category>

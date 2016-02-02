@@ -30,7 +30,6 @@ router.get('/directive/template/:name', function(req, res, next) {
 router.get('/toolbox.xml', function(req, res, next) {
 	glob('/boards/**/toolbox.xml', {root: path.join(__dirname, '../')}, function(err, files) {
 		async.map(files, readFileUTF8, function(err, boardToolboxes) {
-			console.log('board ', boardToolboxes);
 			res.type('.xml').render('boards/toolbox.ejs', { boardToolboxes: boardToolboxes });
 		});
 	});

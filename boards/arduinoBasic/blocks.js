@@ -38,8 +38,31 @@ Blockly.Blocks['arduinoBasic_rawCommand'] = {
 
 Blockly.JavaScript['arduinoBasic_rawCommand'] = function(block) {
 	var value_rawcommand = Blockly.JavaScript.valueToCode(block, 'rawCommand', Blockly.JavaScript.ORDER_ATOMIC);
-	var code = 'arduinoBasic_sendRaw(' + value_rawcommand + ');\n';
-	code += 'log("arduino blink raw command: ",' + value_rawcommand + ');';
+	var code = 'arduinoBasic_rawCommand(' + value_rawcommand + ');\n';
+	code += 'log("arduino blink raw command: ",' + value_rawcommand + ');\n';
+	return code;
+};
+
+Blockly.Blocks['arduinoBasic_echoAfter'] = {
+	init: function() {
+		this.appendValueInput("delay")
+				.setCheck("Number")
+				.appendField("echo after");
+		this.appendDummyInput()
+				.appendField("ms");
+		this.setInputsInline(true);
+		this.setPreviousStatement(true);
+		this.setNextStatement(true);
+		this.setColour(135);
+		this.setTooltip('This will echo a response from the board after number of milliseconds.');
+		this.setHelpUrl('');
+	}
+};
+
+
+Blockly.JavaScript['arduinoBasic_echoAfter'] = function(block) {
+	var value_delay = Blockly.JavaScript.valueToCode(block, 'delay', Blockly.JavaScript.ORDER_ATOMIC);
+	var code = 'arduinoBasic_echoAfter(' + value_delay + ');';
 	return code + '\n';
 };
 
@@ -66,78 +89,6 @@ Blockly.JavaScript['arduinoBasic_setPin'] = function(block) {
 	var pin = block.getFieldValue('pin');
 	var voltage = block.getFieldValue('voltage');
 	var code = 'arduinoBasic_setPin("' + pin + '", "' + voltage + '");\n';
-	code += 'log("setPin: ","' + voltage + '");';
-	return code;
-};
-
-
-
-Blockly.Blocks['arduinoBasic_blinkDuration'] = {
-	init: function() {
-		this.appendDummyInput()
-			.appendField('Arduino Blink')
-			.appendField(new Blockly.FieldImage("/images/clock-icon.png", 20, 20, ""));
-		this.appendValueInput('duration')
-			.setCheck('Number')
-			.appendField('duration');
-		this.setInputsInline(true);
-		this.setPreviousStatement(true);
-		this.setNextStatement(true);
-		this.setColour(20);
-		this.setTooltip('');
-		this.setHelpUrl('');
-	}
-};
-
-Blockly.JavaScript['arduinoBasic_blinkDuration'] = function(block) {
-	var value_duration = Blockly.JavaScript.valueToCode(block, 'duration', Blockly.JavaScript.ORDER_ATOMIC);
-	var code = 'arduinoBasic_blinkDuration(' + value_duration + ');\n';
-	code += 'log("blink duration: ",' + value_duration + ');';
-	return code + '\n';
-};
-
-
-Blockly.Blocks['arduinoBasic_isBlinking'] = {
-	init: function() {
-		this.appendDummyInput()
-			.appendField("Arduino Blink")
-			.appendField(new Blockly.FieldImage("/images/blue-led-icon.png", 15, 15, ""))
-			.appendField("isBlinking")
-			.appendField(new Blockly.FieldDropdown([["On", "on"], ["Off", "off"]]), "blink");
-		this.setInputsInline(true);
-		this.setPreviousStatement(true);
-		this.setNextStatement(true);
-		this.setColour(20);
-		this.setTooltip('');
-		this.setHelpUrl('');
-	}
-};
-
-Blockly.JavaScript['arduinoBasic_isBlinking'] = function(block) {
-	var value_blink = block.getFieldValue('blink');
-	var code = 'arduinoBasic_isBlinking("' + value_blink + '");\n';
-	code += 'log("isBlinking: ","' + value_blink + '");';
-	return code;
-};
-
-Blockly.Blocks['arduinoBasic_waitForLed'] = {
-	init: function() {
-		this.appendDummyInput()
-			.appendField("Arduino Blink")
-			.appendField(new Blockly.FieldImage("/images/blue-led-icon.png", 15, 15, ""))
-			.appendField("wait for LED")
-			.appendField(new Blockly.FieldDropdown([["On", "on"], ["Off", "off"]]), "blink");
-		this.setInputsInline(true);
-		this.setPreviousStatement(true);
-		this.setNextStatement(true);
-		this.setColour(20);
-		this.setTooltip('');
-		this.setHelpUrl('');
-	}
-};
-
-Blockly.JavaScript['arduinoBasic_waitForLed'] = function(block) {
-	var value_blink = block.getFieldValue('blink');
-	var code = 'arduinoBasic_waitForLED("' + value_blink + '");\n';
+	code += 'log("setPin: ","' + voltage + '");\n';
 	return code;
 };

@@ -33,7 +33,7 @@ angular.module('barcon.instructionBuilder').controller('BlocklyCtrl', [
 
 						socket.on('highlightBlock', function(data) {
 							Blockly.workspace.traceOn(true);
-							Blockly.workspace.highlightBlock(Number(data.id));
+							Blockly.workspace.highlightBlock(data.id);
 						});
 					});
 		}

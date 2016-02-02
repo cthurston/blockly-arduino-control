@@ -103,11 +103,12 @@ Board.prototype.queueWait = function() {
 	var interpreterNext = arguments[arguments.length - 1]; //Next will always be the last argument on an asyncFunction in the interpreter.
 	var originalArgs = Array.prototype.slice.call(arguments, 0, arguments.length - 1);
 
-	this.commandQueue[cmd] = function(args) {
-		this.commandQueue[cmd] = null;  //Removes this pending command from the queue.
-		interpreterNext(msg); //Tells the interpreter to continue
+	var commandQueue = this.commandQueue;
+	commandQueue[cmd] = function(args) {
+		commandQueue[cmd] = null;  //Removes this pending command from the queue.
+		interpreterNext(); //Tells the interpreter to continue
 
-		this.updateState(args, originalArgs);
+		//this.updateState(args, originalArgs);
 	};
 };
 
