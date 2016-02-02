@@ -4,26 +4,18 @@ var router = express.Router();
 var fs = require('fs');
 var path = require('path');
 
-router.get('/', function(req, res, next) {
-	var loadPath = path.join(__dirname, '../db/instruction');
-	fs.readdir(loadPath, function(err, files) {
-		if (err) {
-			return res.status(500).send(err);
-		}
-		res.send({
-			instructions: files
-		});
-	});
-});
-
-router.get('/:name', function(req, res, next) {
-	var name = req.params.name;
-	var loadPath = path.join(__dirname, '../db/instruction', name);
-	res.sendFile(loadPath);
-});
-
-
-router.route('/:name')
+router.route('/')
+		.get(function(req, res, next) {
+			var loadPath = path.join(__dirname, '../db/instruction');
+			fs.readdir(loadPath, function(err, files) {
+				if (err) {
+					return res.status(500).send(err);
+				}
+				res.send({
+					instructions: files
+				});
+			});
+		})
 		.post(function(req, res, next) {
 			var name = req.body.name;
 			var xml = req.body.xml;
@@ -44,7 +36,16 @@ router.route('/:name')
 					});
 				}
 			});
-		})
+		});
+
+router.get('/:name', function(req, res, next) {
+	var name = req.params.name;
+	var loadPath = path.join(__dirname, '../db/instruction', name);
+	res.sendFile(loadPath);
+});
+
+
+router.route('/:name')
 		.delete(function(req, res, next) {
 			var name = req.params.name;
 			var savePath = path.join(__dirname, '../db/instruction', name);

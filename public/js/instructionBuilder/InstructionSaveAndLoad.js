@@ -1,42 +1,45 @@
 angular.module('barcon.instructionBuilder').controller('InstructionSaveAndLoad', [
 	'$scope', '$http', 'Blockly',
 	function($scope, $http, Blockly) {
-		$scope.protocolName = '';
-		$scope.savedProtocols = [];
+		$scope.instructionName = '';
+		$scope.savedInstructions = [];
+
 		$scope.save = function() {
-			if (!$scope.protocolName.length) {
-				$scope.protocolName = 'new';
+			if (!$scope.instructionName.length) {
+				$scope.instructionName = 'new';
 			}
 
-			$http.post('/protocol', {
-				name: $scope.protocolName,
+			$http.post('/instruction', {
+				name: $scope.instructionName,
 				xml: Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.workspace))
 			}).then(function() {
-				$scope.loadSavedProtocols();
+				$scope.loadSavedInstructions();
 			});
 		};
+
 		$scope.remove = function(name) {
-			$http.delete('/protocol/' + name)
-					.then(function(res) {
-						$scope.loadSavedProtocols();
-					});
+			$http.delete('/instruction/' + name)
+				.then(function(res) {
+					$scope.loadSavedInstructions();
+				});
 		};
 
 		$scope.load = function(name) {
-			$http.get('/protocol/' + name)
-					.then(function(res) {
+			$http.get('/instruction/' + name)
+				.then(function(res) {
 
-						var xml = Blockly.Xml.textToDom(res.data);
-						Blockly.Xml.domToWorkspace(Blockly.workspace, xml);
+					var xml = Blockly.Xml.textToDom(res.data);
+					Blockly.Xml.domToWorkspace(Blockly.workspace, xml);
 
-					});
+				});
 		};
 
-		$scope.loadSavedProtocols = function() {
-			$http.get('/protocol')
-					.then(function(res) {
-						$scope.savedProtocols = res.data.protocols;
-					});
+		$scope.loadSavedInstructions = function() {
+			$http.get('/instruction')
+				.then(function(res) {
+					$scope.savedInstructions = res.data.instructions;
+				});
 		};
+
 	}]);
 
