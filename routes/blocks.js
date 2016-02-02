@@ -6,7 +6,7 @@ var glob = require('glob');
 var async = require('async');
 var path = require('path');
 
-router.get('/', function(req, res, next){
+router.get('/', function(req, res, next) {
 	glob('/boards/**/blocks.js', {root: path.join(__dirname, '../')}, function(err, files) {
 		async.map(files, fs.readFile, function(err, results) {
 			res.send(results.join('\n'));
@@ -30,14 +30,14 @@ router.get('/directive/template/:name', function(req, res, next) {
 router.get('/toolbox.xml', function(req, res, next) {
 	glob('/boards/**/toolbox.xml', {root: path.join(__dirname, '../')}, function(err, files) {
 		async.map(files, readFileUTF8, function(err, boardToolboxes) {
-			res.type('.xml').render('boards/toolbox.ejs', { boardToolboxes: boardToolboxes });
+			res.type('.xml').render('boards/toolbox.ejs', {boardToolboxes: boardToolboxes});
 		});
 	});
 });
 
-router.get('/com_ports', function(req, res, next){
+router.get('/com_ports', function(req, res, next) {
 	require('serialport').list(function(err, ports) {
-		res.type('.js').render('boards/utility/comport_blocks.ejs', { ports: ports });
+		res.type('.js').render('boards/utility/comport_blocks.ejs', {ports: ports});
 	});
 });
 
@@ -45,6 +45,6 @@ router.get('/com_ports', function(req, res, next){
 module.exports = router;
 
 
-function readFileUTF8(file, next){
+function readFileUTF8(file, next) {
 	fs.readFile(file, 'utf8', next);
 }

@@ -10,7 +10,7 @@ function Board() {
 	this.baudRate = 115200;
 	this.prefix = 'defaultBoard_';
 	this.initializationTime = 2000;
-	this.name ='Default Board';
+	this.name = 'Default Board';
 	this.protocol = new BracketsProtocol();
 
 	this.clients = [];
@@ -22,7 +22,7 @@ function Board() {
 
 }
 
-Board.prototype.init = function(){
+Board.prototype.init = function() {
 	throw new Error('Please implement init function for Board ' + this.name);
 };
 

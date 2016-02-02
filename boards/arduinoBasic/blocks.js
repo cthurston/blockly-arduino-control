@@ -1,7 +1,7 @@
 Blockly.Blocks['arduinoBasic_connect'] = {
 	init: function() {
 		this.appendDummyInput()
-			.appendField('Arduino Blink');
+			.appendField('Arduino Basic');
 		this.appendValueInput('port')
 			.setCheck('com_port')
 			.appendField('connect on port');
@@ -25,7 +25,7 @@ Blockly.Blocks['arduinoBasic_rawCommand'] = {
 	init: function() {
 		this.appendValueInput("rawCommand")
 			.setCheck("String")
-			.appendField("Arduino Blink")
+			.appendField("Arduino Basic")
 			.appendField("raw command");
 		this.setInputsInline(false);
 		this.setPreviousStatement(true);
@@ -39,21 +39,21 @@ Blockly.Blocks['arduinoBasic_rawCommand'] = {
 Blockly.JavaScript['arduinoBasic_rawCommand'] = function(block) {
 	var value_rawcommand = Blockly.JavaScript.valueToCode(block, 'rawCommand', Blockly.JavaScript.ORDER_ATOMIC);
 	var code = 'arduinoBasic_rawCommand(' + value_rawcommand + ');\n';
-	code += 'log("arduino blink raw command: ",' + value_rawcommand + ');\n';
+	code += 'log("arduino basic raw command: ",' + value_rawcommand + ');\n';
 	return code;
 };
 
 Blockly.Blocks['arduinoBasic_echoAfter'] = {
 	init: function() {
 		this.appendValueInput("delay")
-				.setCheck("Number")
-				.appendField("echo after");
+			.setCheck("Number")
+			.appendField("echo after");
 		this.appendDummyInput()
-				.appendField("ms");
+			.appendField("ms");
 		this.setInputsInline(true);
 		this.setPreviousStatement(true);
 		this.setNextStatement(true);
-		this.setColour(135);
+		this.setColour(20);
 		this.setTooltip('This will echo a response from the board after number of milliseconds.');
 		this.setHelpUrl('');
 	}
@@ -67,15 +67,14 @@ Blockly.JavaScript['arduinoBasic_echoAfter'] = function(block) {
 };
 
 
-
 Blockly.Blocks['arduinoBasic_setPin'] = {
 	init: function() {
 		this.appendDummyInput()
-				.appendField("Arduino Basic")
-				//.appendField(new Blockly.FieldImage("/images/blue-led-icon.png", 15, 15, ""))
-				.appendField(" set pin")
-				.appendField(new Blockly.FieldDropdown([["Pin 13", "13"], ["Pin 12", "12"],["Pin 11", "11"],["Pin 10", "10"],["Pin 9", "9"],["Pin 8", "8"]]), "pin")
-				.appendField(new Blockly.FieldDropdown([["On", "1"], ["Off", "0"]]), "voltage");
+			.appendField("Arduino Basic")
+			//.appendField(new Blockly.FieldImage("/images/blue-led-icon.png", 15, 15, ""))
+			.appendField(" set pin")
+			.appendField(new Blockly.FieldDropdown([["Pin 13", "13"], ["Pin 12", "12"], ["Pin 11", "11"], ["Pin 10", "10"], ["Pin 9", "9"], ["Pin 8", "8"]]), "pin")
+			.appendField(new Blockly.FieldDropdown([["On", "1"], ["Off", "0"]]), "voltage");
 		this.setInputsInline(true);
 		this.setPreviousStatement(true);
 		this.setNextStatement(true);

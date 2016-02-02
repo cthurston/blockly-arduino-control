@@ -5,38 +5,38 @@ var fs = require('fs');
 var path = require('path');
 
 router.route('/')
-		.get(function(req, res, next) {
-			var loadPath = path.join(__dirname, '../db/instruction');
-			fs.readdir(loadPath, function(err, files) {
-				if (err) {
-					return res.status(500).send(err);
-				}
-				res.send({
-					instructions: files
-				});
-			});
-		})
-		.post(function(req, res, next) {
-			var name = req.body.name;
-			var xml = req.body.xml;
-			var savePath = path.join(__dirname, '../db/instruction', name);
-			ensureExists(path.join(__dirname, '../db/instruction'), function(err) {
-				if (err) {
-					// handle folder creation error
-					res.status(500).send(err);
-				} else {
-					fs.writeFile(savePath, xml, function(err) {
-						if (err) {
-							res.status(500).send(err);
-						}
-						res.send({
-							success: 1,
-							name: name
-						});
-					});
-				}
+	.get(function(req, res, next) {
+		var loadPath = path.join(__dirname, '../db/instruction');
+		fs.readdir(loadPath, function(err, files) {
+			if (err) {
+				return res.status(500).send(err);
+			}
+			res.send({
+				instructions: files
 			});
 		});
+	})
+	.post(function(req, res, next) {
+		var name = req.body.name;
+		var xml = req.body.xml;
+		var savePath = path.join(__dirname, '../db/instruction', name);
+		ensureExists(path.join(__dirname, '../db/instruction'), function(err) {
+			if (err) {
+				// handle folder creation error
+				res.status(500).send(err);
+			} else {
+				fs.writeFile(savePath, xml, function(err) {
+					if (err) {
+						res.status(500).send(err);
+					}
+					res.send({
+						success: 1,
+						name: name
+					});
+				});
+			}
+		});
+	});
 
 router.get('/:name', function(req, res, next) {
 	var name = req.params.name;
@@ -46,19 +46,19 @@ router.get('/:name', function(req, res, next) {
 
 
 router.route('/:name')
-		.delete(function(req, res, next) {
-			var name = req.params.name;
-			var savePath = path.join(__dirname, '../db/instruction', name);
-			fs.unlink(savePath, function(err) {
-				if (err) {
-					res.status(500).send(err);
-				}
-				res.send({
-					success: 1,
-					name: name
-				});
+	.delete(function(req, res, next) {
+		var name = req.params.name;
+		var savePath = path.join(__dirname, '../db/instruction', name);
+		fs.unlink(savePath, function(err) {
+			if (err) {
+				res.status(500).send(err);
+			}
+			res.send({
+				success: 1,
+				name: name
 			});
 		});
+	});
 
 
 module.exports = router;

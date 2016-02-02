@@ -8,14 +8,16 @@ var expect = require('chai').expect;
 var BracketsProtocol = require('../BracketsProtocol');
 
 var mockSerialPort = {
-	write: function(){},
-	on: function(){}
+	write: function() {
+	},
+	on: function() {
+	}
 };
 
 describe('BracketsProtocol', function() {
 	describe('write', function() {
 		var brackets;
-		beforeEach(function(){
+		beforeEach(function() {
 			brackets = new BracketsProtocol(mockSerialPort);
 		});
 
@@ -51,7 +53,7 @@ describe('BracketsProtocol', function() {
 	describe('receiveData', function() {
 		var brackets;
 		var next;
-		beforeEach(function(){
+		beforeEach(function() {
 			next = chai.spy();
 			brackets = new BracketsProtocol(mockSerialPort, next);
 		});
@@ -73,7 +75,7 @@ describe('BracketsProtocol', function() {
 			expect(noClose).to.throw(Error);
 		});
 
-		it('should call callback with arguments on close of bracket', function(){
+		it('should call callback with arguments on close of bracket', function() {
 			brackets.receiveData('[arg1');
 			brackets.receiveData(']');
 
@@ -81,7 +83,7 @@ describe('BracketsProtocol', function() {
 			expect(next).to.have.been.called.with('arg1');
 		});
 
-		it('should call callback with multiple arguments on close of bracket', function(){
+		it('should call callback with multiple arguments on close of bracket', function() {
 			brackets.receiveData('[arg1 arg2');
 			brackets.receiveData(' 4.5');
 			brackets.receiveData(']');
@@ -90,7 +92,7 @@ describe('BracketsProtocol', function() {
 			expect(next).to.have.been.called.with('arg1', 'arg2', '4.5');
 		});
 
-		it('should call callback with each valid packet in the data', function(){
+		it('should call callback with each valid packet in the data', function() {
 			brackets.receiveData('[arg1][arg2 stuff 4.5]');
 
 			expect(next).to.have.been.called.twice;
@@ -101,18 +103,18 @@ describe('BracketsProtocol', function() {
 });
 
 
-function ABoard(){
+function ABoard() {
 	Board.call(this);
 	Prot.call(this);
 }
 
-function Board(){
+function Board() {
 	this.conn = 'hey';
 }
 
-function Prot(){
-	if(!this.conn) throw new Error('HEYYYYYYYYYYYYYYYYY');
-	this.write = function(){
+function Prot() {
+	if (!this.conn) throw new Error('HEYYYYYYYYYYYYYYYYY');
+	this.write = function() {
 		return this.conn;
 	}
 }
@@ -122,9 +124,8 @@ inh(ABoard, Board);
 inh(ABoard, Prot);
 
 
-
-describe('junk this', function(){
-	it('should inherit', function(){
+describe('junk this', function() {
+	it('should inherit', function() {
 		var b = new ABoard();
 
 		expect(b.write()).to.equal('hey');
@@ -133,13 +134,13 @@ describe('junk this', function(){
 	});
 });
 
-describe('manipulate arguments', function(){
-	it('should manipulate', function(){
+describe('manipulate arguments', function() {
+	it('should manipulate', function() {
 
-		var two = function(a){
+		var two = function(a) {
 			console.log(arguments[0], a);
 		};
-		var one = function(){
+		var one = function() {
 			arguments[0] = 'hey';
 			two.apply(null, arguments);
 		};

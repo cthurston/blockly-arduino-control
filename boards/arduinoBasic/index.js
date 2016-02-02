@@ -4,7 +4,7 @@ var Board = require('../Board');
 
 module.exports = ArduinoBasic;
 
-function ArduinoBasic(options){
+function ArduinoBasic(options) {
 	Board.call(this);
 
 	options = options || {};
@@ -17,7 +17,7 @@ function ArduinoBasic(options){
 
 inherits(ArduinoBasic, Board);
 
-ArduinoBasic.prototype.init = function (master, scope, socket){
+ArduinoBasic.prototype.init = function(master, scope, socket) {
 	this.addClient(socket);
 
 	master.addApi(this, 'rawCommand', this.rawCommand);
@@ -28,12 +28,12 @@ ArduinoBasic.prototype.init = function (master, scope, socket){
 	master.setProperty(scope, this.prefix + 'connect', master.createAsyncFunction(this.connect));
 };
 
-ArduinoBasic.prototype.setPin = function(pin, value){
+ArduinoBasic.prototype.setPin = function(pin, value) {
 	var cmd = 3;
 	this.runCommand(cmd, pin, value);
 };
 
-ArduinoBasic.prototype.echoAfter = function(delay, next){
+ArduinoBasic.prototype.echoAfter = function(delay, next) {
 	var cmd = 1;
 	this.runCommandAndWait(cmd, delay, next);
 };
